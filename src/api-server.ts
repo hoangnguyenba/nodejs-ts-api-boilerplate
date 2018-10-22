@@ -1,10 +1,9 @@
 import * as express from 'express';
 import { Server } from 'typescript-rest';
 import * as http from 'http';
-import * as path from 'path';
+import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import controllers from './controllers';
-import { AuthController } from './components/auth';
+import routes from './routes';
 
 export class ApiServer {
 
@@ -17,10 +16,7 @@ export class ApiServer {
         this.config();
 
         Server.useIoC();
-        Server.buildServices(this.app, ...controllers, AuthController);
-
-        // TODO: enable for Swagger generation error
-        // Server.loadServices(this.app, 'controllers/*', __dirname);
+        Server.buildServices(this.app, ...routes);
         Server.swagger(this.app, './dist/swagger.json', '/api-docs', 'localhost:3000', ['http']);
     }
 
@@ -29,9 +25,9 @@ export class ApiServer {
      */
     private config(): void {
         // Native Express configuration
-        // this.app.use( bodyParser.urlencoded( { extended: false } ) );
-        // this.app.use( bodyParser.json( { limit: '1mb' } ) );
-        this.app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+        this.app.use( bodyParser.urlencoded( { extended: false } ) );
+        this.app.use( bodyParser.json( { limit: '1mb' } ) );
+        // this.app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
         this.app.use(cors());
     }
 

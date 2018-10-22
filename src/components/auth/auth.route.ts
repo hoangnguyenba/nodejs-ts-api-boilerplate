@@ -8,7 +8,7 @@ import { loginValidator } from './auth.validation';
  * Auth routes
  */
 @Path('/v1')
-export class AuthController {
+export class AuthRoute {
   @Inject
   private authService: AuthService;
 
