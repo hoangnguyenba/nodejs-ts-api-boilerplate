@@ -1,6 +1,6 @@
 'use strict';
 
-import { ApiServer } from './api-server';
+import { ApiServer } from './api/server';
 
 export const start = (): Promise<void> => {
     return new Promise<void>((resolve, reject) => {

@@ -3,7 +3,8 @@ import { Server } from 'typescript-rest';
 import * as http from 'http';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import routes from './routes';
+import routesV1 from './routes/v1';
+import { converterError } from './middlewares/error.middleware';
 
 export class ApiServer {
 
@@ -16,8 +17,10 @@ export class ApiServer {
         this.config();
 
         Server.useIoC();
-        Server.buildServices(this.app, ...routes);
+        Server.buildServices(this.app, ...routesV1);
         Server.swagger(this.app, './dist/swagger.json', '/api-docs', 'localhost:3000', ['http']);
+
+        this.app.use(converterError);
     }
 
     /**
