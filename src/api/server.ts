@@ -14,12 +14,15 @@ export class ApiServer {
 
     constructor() {
         this.app = express();
+        // General config
         this.config();
 
+        // Router
         Server.useIoC();
         Server.buildServices(this.app, ...routesV1);
         Server.swagger(this.app, './dist/swagger.json', '/api-docs', 'localhost:3000', ['http']);
 
+        // Error handler
         this.app.use(converterError);
     }
 
