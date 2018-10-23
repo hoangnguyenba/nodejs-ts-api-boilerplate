@@ -22,6 +22,7 @@
     "http-status": "^1.2.0",
     "joi": "^14.0.0",
     "jsonwebtoken": "^8.3.0",
+    "mysql": "^2.16.0",
     "typeorm": "^0.2.8",
     "typescript-ioc": "1.2.4",
     "typescript-rest": "1.6.1",

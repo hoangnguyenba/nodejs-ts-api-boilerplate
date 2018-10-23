@@ -1,7 +1,6 @@
-const httpStatus = require('http-status');
+import * as httpStatus from 'http-status';
 
 export interface ErrorAgrs {
-    name?: string;
     message: string;
     errors?: any[];
     status?: number;
@@ -43,7 +42,6 @@ export class APIError extends ExtendableError {
      * @param {boolean} isPublic - Whether the message should be visible to user or not.
      */
     constructor({
-        name,
         message,
         errors,
         stack,
@@ -51,7 +49,7 @@ export class APIError extends ExtendableError {
         isPublic = false
     }: ErrorAgrs) {
         super({
-            errors, isPublic, message, name, stack, status,
+            errors, isPublic, message, stack, status,
         });
     }
 }

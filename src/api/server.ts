@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import * as express from 'express';
 import { Server } from 'typescript-rest';
 import * as http from 'http';
@@ -5,6 +7,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import routesV1 from './routes/v1';
 import { converterError } from './middlewares/error.middleware';
+import {getConnectionManager} from 'typeorm';
+import config from '../configs/config';
 
 export class ApiServer {
 
@@ -13,6 +17,21 @@ export class ApiServer {
     public PORT: number = +process.env.PORT || 3000;
 
     constructor() {
+        // DB init
+        const connectionManager = getConnectionManager();
+        const connection = connectionManager.create({
+            database: config.db.DATABASE,
+            host: config.db.HOST,
+            password: config.db.PASSWORD,
+            port: 3306,
+            type: config.db.TYPE,
+            username: config.db.USERNAME,
+        });
+        connection.connect().then(() => {
+            // tslint:disable-next-line:no-console
+            console.log('Connected DB');
+        }); // performs connection
+
         this.app = express();
         // General config
         this.config();
