@@ -9,6 +9,7 @@ import routesV1 from './routes/v1';
 import { converterError } from './middlewares/error.middleware';
 import {getConnectionManager} from 'typeorm';
 import config from '../configs/config';
+import { UserModel } from '../components/users/user.model';
 
 export class ApiServer {
 
@@ -21,6 +22,7 @@ export class ApiServer {
         const connectionManager = getConnectionManager();
         const connection = connectionManager.create({
             database: config.db.DATABASE,
+            entities: [UserModel],
             host: config.db.HOST,
             password: config.db.PASSWORD,
             port: 3306,

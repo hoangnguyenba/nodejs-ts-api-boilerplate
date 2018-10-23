@@ -1,8 +1,9 @@
 import { POST, Path, FormParam, Preprocessor } from 'typescript-rest';
 import { Inject } from 'typescript-ioc';
 
-import { AuthService, LoginResponse } from './auth.service';
+import { AuthService, LoginResponse, RegisterResponse } from './auth.service';
 import { loginValidator, registerValidator } from './auth.validation';
+import { UserModel } from '../users';
 
 /**
  * Auth routes
@@ -25,14 +26,15 @@ export class AuthRoute {
   }
 
   /**
-   * Register with email and password
-   * @param email email of user
-   * @param password password of user
+   * @description Register user
+   * @author Hoang Nguyen
+   * @returns {Promise<LoginResponse>}
+   * @memberof AuthRoute
    */
   @Preprocessor(registerValidator)
   @Path('register')
   @POST
-  register( @FormParam('email') email: string, @FormParam('password') password: string): Promise<LoginResponse> {
-    return this.authService.login({email: email, password: password});
+  register(userInfo: UserModel): Promise<RegisterResponse> {
+    return this.authService.register(userInfo);
   }
 }

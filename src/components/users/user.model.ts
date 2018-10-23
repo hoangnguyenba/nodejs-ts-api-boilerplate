@@ -1,6 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class UserModel extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -10,8 +10,8 @@ export class UserModel extends BaseEntity {
     email: string;
 
     @Column()
-    firstName: string;
+    firstname: string;
 
     @Column()
-    lastName: string;
+    lastname: string;
 }
